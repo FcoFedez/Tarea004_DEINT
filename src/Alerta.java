@@ -1,3 +1,8 @@
+
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -27,15 +32,23 @@ public class Alerta extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jCalendar1 = new com.toedter.calendar.JCalendar();
+        calendario = new com.toedter.calendar.JCalendar();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        ejercicio3_Beans1 = new misBeans.Ejercicio3_Beans();
-        ejercicio3_Beans2 = new misBeans.Ejercicio3_Beans();
+        spHoras = new misBeans.Ejercicio3_Beans();
+        spMinutos = new misBeans.Ejercicio3_Beans();
         jButton1 = new javax.swing.JButton();
+        jlMensaje = new javax.swing.JLabel();
+        jlError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        calendario.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                calendarioPropertyChange(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Myanmar Text", 1, 24)); // NOI18N
         jLabel1.setText("CREACION DE ALERTAS");
@@ -44,6 +57,30 @@ public class Alerta extends javax.swing.JDialog {
 
         jLabel3.setText("MINUTOS");
 
+        spHoras.setNumMaximo(12);
+        spHoras.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spHorasStateChanged(evt);
+            }
+        });
+        spHoras.addNumeroMaximoAlcanzadoListener(new misBeans.Ejercicio3_Beans.NumeroMaximoAlcanzadoListener() {
+            public void capturarNumeroMaximo(misBeans.Ejercicio3_Beans.NumeroMaximoAlcanzadoEvent evt) {
+                spHorasCapturarNumeroMaximo(evt);
+            }
+        });
+
+        spMinutos.setNumMaximo(59);
+        spMinutos.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spMinutosStateChanged(evt);
+            }
+        });
+        spMinutos.addNumeroMaximoAlcanzadoListener(new misBeans.Ejercicio3_Beans.NumeroMaximoAlcanzadoListener() {
+            public void capturarNumeroMaximo(misBeans.Ejercicio3_Beans.NumeroMaximoAlcanzadoEvent evt) {
+                spMinutosCapturarNumeroMaximo(evt);
+            }
+        });
+
         jButton1.setText("Establecer Alerta");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -51,28 +88,38 @@ public class Alerta extends javax.swing.JDialog {
             }
         });
 
+        jlMensaje.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jlMensaje.setText("Alerta programada para dia a las horas minutos");
+
+        jlError.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jlError.setForeground(new java.awt.Color(255, 51, 51));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addGap(45, 45, 45)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(ejercicio3_Beans1, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
-                    .addComponent(ejercicio3_Beans2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(74, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(210, 210, 210))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jlMensaje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(calendario, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(45, 45, 45)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(spHoras, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                            .addComponent(spMinutos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jlError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -81,17 +128,21 @@ public class Alerta extends javax.swing.JDialog {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(56, 56, 56)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(calendario, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(ejercicio3_Beans1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(spHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(42, 42, 42)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
-                            .addComponent(ejercicio3_Beans2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 198, Short.MAX_VALUE)
+                            .addComponent(spMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(27, 27, 27)
+                .addComponent(jlMensaje)
+                .addGap(18, 18, 18)
+                .addComponent(jlError)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(41, 41, 41))
         );
@@ -100,8 +151,43 @@ public class Alerta extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+       JOptionPane.showMessageDialog(null, "Alerta guardada con exito");
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void spHorasStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spHorasStateChanged
+       Calendar fecha = calendario.getCalendar();
+       int dia = fecha.get(Calendar.DATE);
+        jlMensaje.setText("Alerta programada para el dia "+dia+ " a las "+spHoras.getValue().toString() +" horas "+spMinutos.getValue().toString()+" minutos");
+         int num = Integer.parseInt(spHoras.getValue().toString());
+        if(num < spHoras.getNumMaximo()){
+            jlError.setText("");
+        }
+    }//GEN-LAST:event_spHorasStateChanged
+
+    private void spMinutosStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spMinutosStateChanged
+        Calendar fecha = calendario.getCalendar();
+       int dia = fecha.get(Calendar.DATE);
+        jlMensaje.setText("Alerta programada para el dia "+dia+ " a las "+spHoras.getValue().toString() +" horas "+spMinutos.getValue().toString()+" minutos");
+        int num = Integer.parseInt(spMinutos.getValue().toString());
+        if(num < spMinutos.getNumMaximo()){
+            jlError.setText("");
+        }
+    }//GEN-LAST:event_spMinutosStateChanged
+
+    private void calendarioPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_calendarioPropertyChange
+       Calendar fecha = calendario.getCalendar();
+       int dia = fecha.get(Calendar.DATE);
+        jlMensaje.setText("Alerta programada para el dia "+dia+ " a las "+spHoras.getValue().toString() +" horas "+spMinutos.getValue().toString()+" minutos");
+        
+    }//GEN-LAST:event_calendarioPropertyChange
+
+    private void spHorasCapturarNumeroMaximo(misBeans.Ejercicio3_Beans.NumeroMaximoAlcanzadoEvent evt) {//GEN-FIRST:event_spHorasCapturarNumeroMaximo
+        jlError.setText("Las horas no pueden ser mayor a 12");
+    }//GEN-LAST:event_spHorasCapturarNumeroMaximo
+
+    private void spMinutosCapturarNumeroMaximo(misBeans.Ejercicio3_Beans.NumeroMaximoAlcanzadoEvent evt) {//GEN-FIRST:event_spMinutosCapturarNumeroMaximo
+       jlError.setText("los minutos no pueden ser mayor a 59");
+    }//GEN-LAST:event_spMinutosCapturarNumeroMaximo
 
     /**
      * @param args the command line arguments
@@ -146,12 +232,14 @@ public class Alerta extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private misBeans.Ejercicio3_Beans ejercicio3_Beans1;
-    private misBeans.Ejercicio3_Beans ejercicio3_Beans2;
+    private com.toedter.calendar.JCalendar calendario;
     private javax.swing.JButton jButton1;
-    private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jlError;
+    private javax.swing.JLabel jlMensaje;
+    private misBeans.Ejercicio3_Beans spHoras;
+    private misBeans.Ejercicio3_Beans spMinutos;
     // End of variables declaration//GEN-END:variables
 }
